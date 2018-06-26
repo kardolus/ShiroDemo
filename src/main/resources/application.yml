@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    username: pivotal
+    password:
+    url: jdbc:postgresql://localhost:5432/shiro_dev
