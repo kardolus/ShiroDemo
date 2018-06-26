@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "permissions")
 public class Permission {
-  @Id // TODO multicolumn ID
+  @Id 
   @Column(name = "path")
   private String path;
   private String username;
