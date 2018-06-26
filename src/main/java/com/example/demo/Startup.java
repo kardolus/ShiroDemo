@@ -24,10 +24,12 @@ public class Startup implements ApplicationListener<ApplicationReadyEvent> {
 
     System.out.println("*** USER 1 ***");
     System.out.println("!!!!!!!!!!" + currentUser.isAuthenticated());
-    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.READ)));
-    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/foo/bar/baz", FileOperation.READ)));
-    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/notauthorized", FileOperation.READ)));
-    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/foo/bar/baz", FileOperation.WRITE)));
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.DELETE))); // false
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.READ))); // true
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.WRITE))); // false
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/foo/bar/baz", FileOperation.READ))); // true
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/notauthorized", FileOperation.READ))); // false
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/foo/bar/baz", FileOperation.WRITE))); // false
     System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password/", FileOperation.READ))); // true
     System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/passwordsdfsd", FileOperation.READ))); // false
     System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password/foo", FileOperation.READ))); // false
@@ -36,8 +38,10 @@ public class Startup implements ApplicationListener<ApplicationReadyEvent> {
 
     currentUser.login(new UsernamePasswordToken("user2", "password2"));
     System.out.println("** USER 2 **");
-    System.out.println("!!!!!!!!!!" + currentUser.isAuthenticated());
-    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.READ)));
-    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/foo/bar/baz", FileOperation.READ)));
+    System.out.println("!!!!!!!!!!" + currentUser.isAuthenticated()); // true
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.READ))); // true
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/foo/bar/baz", FileOperation.READ))); // false
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.WRITE))); // true
+    System.out.println(currentUser.isPermitted(new RequestedCredentialAccess("/password", FileOperation.DELETE))); // false
   }
 }

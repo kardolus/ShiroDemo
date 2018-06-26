@@ -21,9 +21,9 @@ public class PermissionService {
     for (com.example.demo.Permission permission : jpaPermissionRepository.findByUsername(username)) {
       String path = permission.getPath();
       if (path.endsWith("*")) {
-        result.add(new PermissionForAllDescendantCredentials(path.substring(0, path.length()-1), permission.getOperation()));
+        result.add(new PermissionForAllDescendantCredentials(path.substring(0, path.length()-1), permission));
       } else {
-        result.add(new PermissionForTheCredentialItself(path, permission.getOperation()));
+        result.add(new PermissionForTheCredentialItself(path, permission));
       }
     }
     return result;

@@ -7,8 +7,8 @@ import static com.example.demo.FileRelations.is;
 
 class PermissionForTheCredentialItself extends BaseFilePermission {
 
-  public PermissionForTheCredentialItself(String file, String operation) {
-    super(Paths.get(file), FileOperation.valueOf(operation));
+  public PermissionForTheCredentialItself(String file, Permission permission) {
+    super(Paths.get(file), permission);
   }
 
   @Override

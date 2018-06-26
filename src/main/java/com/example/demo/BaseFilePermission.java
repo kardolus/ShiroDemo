@@ -7,11 +7,11 @@ import java.nio.file.Path;
 abstract class BaseFilePermission implements Permission {
 
   protected final Path ownFile;
-  protected final FileOperation operation;
+  protected final com.example.demo.Permission permission;
 
-  BaseFilePermission(Path file, FileOperation operation) {
+  BaseFilePermission(Path file, com.example.demo.Permission permission) {
     this.ownFile = file;
-    this.operation = operation;
+    this.permission = permission;
   }
 
   @Override
@@ -28,15 +28,23 @@ abstract class BaseFilePermission implements Permission {
   }
 
   private boolean requestedOperationIsImplied(RequestedCredentialAccess requestedCredentialAccess) {
-    return requestsRead(requestedCredentialAccess) || writeIsPermitted();
-  }
+    if(requestedCredentialAccess.getOperation() == FileOperation.READ){
+      return permission.getReadPermission();
+    }
+    if(requestedCredentialAccess.getOperation() == FileOperation.WRITE){
+      return permission.getWritePermission();
+    }
+    if(requestedCredentialAccess.getOperation() == FileOperation.DELETE){
+      return permission.getDeletePermission();
+    }
+    if(requestedCredentialAccess.getOperation() == FileOperation.READ_ACL){
+      return permission.getReadAclPermission();
+    }
+    if(requestedCredentialAccess.getOperation() == FileOperation.WRITE_ACL){
+      return permission.getWriteAclPermission();
+    }
 
-  private boolean requestsRead(RequestedCredentialAccess requestedCredentialAccess) {
-    return requestedCredentialAccess.getOperation() == FileOperation.READ;
-  }
-
-  private boolean writeIsPermitted() {
-    return this.operation == FileOperation.WRITE;
+    return false;
   }
 
   /**
