@@ -8,24 +8,14 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.util.Collections;
-import java.util.Set;
 
 @Component
 public class CustomRealm extends JdbcRealm {
-
-
   private PermissionService permissionRepository;
 
   public CustomRealm(PermissionService permissionRepository, DataSource dataSource) {
     this.permissionRepository = permissionRepository;
     this.setDataSource(dataSource);
-  }
-
-  @Override
-  protected Set<String> getRoleNamesForUser(Connection conn, String username) {
-    return Collections.singleton(username);
   }
 
   @Override
